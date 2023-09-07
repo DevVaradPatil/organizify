@@ -12,9 +12,6 @@ function Modal() {
 
   const { userId } = useAuth();
   
-  if(!userId){
-    return null;
-  } 
 
   const imagePickerRef = useRef<HTMLInputElement>(null);
 
@@ -29,7 +26,7 @@ function Modal() {
     e.preventDefault();
     if(!newTaskInput) return;
     
-    addTask(newTaskInput, newTaskType, userId, image);
+    addTask(newTaskInput, newTaskType, userId!, image);
 
     setImage(null);
     closeModal();
