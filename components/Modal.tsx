@@ -12,7 +12,9 @@ function Modal() {
 
   const { userId } = useAuth();
   
-  if(!userId) return;
+  if(!userId){
+    return null;
+  } 
 
   const imagePickerRef = useRef<HTMLInputElement>(null);
 
