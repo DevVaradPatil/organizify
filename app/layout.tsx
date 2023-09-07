@@ -1,5 +1,6 @@
 import Modal from '@/components/Modal'
 import './globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata = {
   title: 'Trello 2.O Clone',
@@ -12,11 +13,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body className='bg-[#F5F6F8]'>
         {children}
         <Modal/>
         </body>
     </html>
+    </ClerkProvider>
   )
 }

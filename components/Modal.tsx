@@ -6,8 +6,13 @@ import { useBoardStore } from "@/store/BoardStore";
 import TaskTypedGroup from "./TaskTypedGroup";
 import Image from "next/image";
 import { PhotoIcon } from "@heroicons/react/24/solid";
+import { useAuth } from "@clerk/nextjs";
 
 function Modal() {
+
+  const { userId } = useAuth();
+  
+  if(!userId) return;
 
   const imagePickerRef = useRef<HTMLInputElement>(null);
 
@@ -22,7 +27,7 @@ function Modal() {
     e.preventDefault();
     if(!newTaskInput) return;
     
-    addTask(newTaskInput, newTaskType, image);
+    addTask(newTaskInput, newTaskType, userId, image);
 
     setImage(null);
     closeModal();

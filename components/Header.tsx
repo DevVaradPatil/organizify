@@ -1,12 +1,17 @@
 'use client'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { UserCircleIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import { UserCircleIcon, MagnifyingGlassIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid'
 import Avatar from 'react-avatar'
 import { useBoardStore } from '@/store/BoardStore'
 import fetchSuggestion from '@/lib/fetchSuggestion'
+import { SignOutButton, SignedIn, useAuth } from '@clerk/nextjs'
 
-function Header() {
+interface Props{
+    userImg: string | null;
+}
+
+function Header({userImg}: Props) {
     const [board,searchString, setSearchString] = useBoardStore((state) => [state.board,state.searchString,state.setSearchString]);
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -39,7 +44,14 @@ function Header() {
             height={100}
             className='w-44 md:w-56 pb-5 md:pb-0 object-contain'
         />
-        <div className='flex items-center space-x-5 flex-1 justify-end w-full'>
+        <div className='flex items-center space-x-4 flex-1 justify-center md:justify-end w-full'>
+        <SignedIn>
+            <SignOutButton>
+              <div className='flex cursor-pointer items-center text-light-1 hover:text-primary-500 mr-2'>
+                <ArrowLeftOnRectangleIcon className='w-10 h-10' name='Sign Out' color='white'/>
+              </div>
+            </SignOutButton>
+          </SignedIn>
             {/* Search Box */}
             <form className='flex items-center space-x-5 bg-white rounded-md p-2 shadow-md flex-1 md:flex-initial'>
                 <MagnifyingGlassIcon className='h-6 w-6 text-gray-400'/>
@@ -48,7 +60,11 @@ function Header() {
             </form>
 
             {/* Avatar */}
-            <Avatar name='Varad Patil' round size='50' color='#0055D1' />
+            {userImg ? (
+            <Image src={userImg} alt='User Image' width={50} height={50} className='rounded-full'/>
+            ) : (
+                <Avatar name='X' round size='50' color='#0055D1' /> 
+            )}
         </div>
         </div>
         <div className='flex items-center justify-center px-5 py-2 md:py-5'>

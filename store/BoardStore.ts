@@ -21,7 +21,10 @@ interface BoardState {
     image: File | null;
     setImage: (image: File | null) => void;
 
-    addTask: (todo: string, columnId: TypedColumn, image?: File | null) => void;
+    user: string;
+    setUser: (user: string ) => void;
+
+    addTask: (todo: string, columnId: TypedColumn, user: string, image?: File | null) => void;
 
     deleteTask: (taskIndex: number, todoId: Todo, id: TypedColumn) => void;
 }
@@ -34,6 +37,7 @@ export const useBoardStore = create<BoardState>((set,get) => ({
   newTaskInput: "",
   newTaskType: "todo",
   image: null,
+  user: "",
   setSearchString: (searchString) => set({ searchString }),
   getBoard: async ()=>{
     const board = await getTodosGroupedByColumn();
@@ -46,6 +50,8 @@ export const useBoardStore = create<BoardState>((set,get) => ({
   setBoardState : (board) => set({ board }),
 
   setImage: (image: File | null) => set({image}),
+
+  setUser: (user: string) => set({user}),
 
   deleteTask: async (taskIndex: number, todo: Todo, id: TypedColumn) => {
     const newColumns = new Map(get().board.columns);
@@ -76,7 +82,7 @@ export const useBoardStore = create<BoardState>((set,get) => ({
     )
   },
 
-  addTask: async ( todo: string, columnId: TypedColumn, image?: File | null ) => {
+  addTask: async ( todo: string, columnId: TypedColumn, user: string, image?: File | null ) => {
     let file: Image | undefined;
 
     if(image) {
@@ -96,6 +102,7 @@ export const useBoardStore = create<BoardState>((set,get) => ({
       {
         title: todo,
         status: columnId,
+        userId: user,
         ...(file && { image: JSON.stringify(file) }),
       }
     );
@@ -110,7 +117,7 @@ export const useBoardStore = create<BoardState>((set,get) => ({
         $createdAt: new Date().toISOString(),
         title: todo,
         status: columnId,
-
+        userId: user,
         ...(file && { image: file }),
       }
 

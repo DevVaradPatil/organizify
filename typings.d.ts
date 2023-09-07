@@ -15,6 +15,7 @@ interface Todo {
     title: string;
     status: TypedColumn;
     image?: Image;
+    userId: string;
 }
 
 interface Image {
