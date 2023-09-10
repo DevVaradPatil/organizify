@@ -6,14 +6,13 @@ import { redirect } from 'next/navigation'
 export default async function Home() {
   const user = await currentUser();
   if(!user) return redirect('/sign-in');
-  console.log(user);
   const firstname = user.firstName;
   const lastname = user.lastName;
   const name = `${firstname} ${lastname}`;
   return (
     <main>
       {/* {Header} */}
-      <Header userImg={user.profileImageUrl} userName={name}/>
+      <Header userImg={user.profileImageUrl} userName={name} userId={user.id}/>
       {/* {Board} */}
       <Board/>
     </main>

@@ -14,9 +14,10 @@ import { SignOutButton, SignedIn } from "@clerk/nextjs";
 interface Props {
   userImg: string | null;
   userName: string | null;
+  userId: string | null | undefined;
 }
 
-function Header({ userImg, userName }: Props) {
+function Header({ userImg, userName,userId }: Props) {
   const [board, searchString, setSearchString] = useBoardStore((state) => [
     state.board,
     state.searchString,
@@ -31,7 +32,7 @@ function Header({ userImg, userName }: Props) {
     setLoading(true);
 
     const fetchSuggestionFunc = async () => {
-      const suggestion = await fetchSuggestion(board);
+      const suggestion = await fetchSuggestion(board, userId!);
       setSuggestion(suggestion);
       setLoading(false);
     };
