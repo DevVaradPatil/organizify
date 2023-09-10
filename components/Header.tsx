@@ -36,7 +36,7 @@ function Header({ userImg, userName }: Props) {
       setLoading(false);
     };
 
-    // fetchSuggestionFunc();
+    fetchSuggestionFunc();
   }, [board]);
 
   const trimmedUserName =
